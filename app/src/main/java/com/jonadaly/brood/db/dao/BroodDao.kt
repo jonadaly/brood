@@ -6,24 +6,24 @@ import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.arch.persistence.room.Query
-import com.jonadaly.brood.db.entities.Example
+import com.jonadaly.brood.db.entities.Brood
 
 @Dao
-interface ExampleDao {
+interface BroodDao {
 
-    @Query("SELECT * FROM Example")
-    fun getExamples(): LiveData<List<Example>>
+    @Query("SELECT * FROM Brood")
+    fun getBroods(): LiveData<List<Brood>>
 
-    @Query("SELECT * FROM Example WHERE id = :exampleId")
-    fun getExample(exampleId: Long): Example
+    @Query("SELECT * FROM Brood WHERE id = :broodId")
+    fun getBrood(broodId: Long): Brood
 
     @Insert(onConflict = REPLACE)
-    fun insertExample(example: Example)
+    fun insertBrood(brood: Brood)
 
     @Delete()
-    fun deleteExample(example: Example)
+    fun deleteBrood(brood: Brood)
 
-    @Query("SELECT count(*) FROM Example")
+    @Query("SELECT count(*) FROM Brood")
     fun getCount(): Int
 
 }
