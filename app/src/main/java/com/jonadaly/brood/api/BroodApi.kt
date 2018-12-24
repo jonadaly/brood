@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface BroodApi {
 
-    @GET("/v1/brood/")
+    @GET("/v1/brood/{brood_uuid}")
     fun getBroodById(@Path("brood_uuid") brood_uuid: String): Observable<Brood>
 
 }

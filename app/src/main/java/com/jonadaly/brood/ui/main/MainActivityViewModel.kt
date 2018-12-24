@@ -1,9 +1,8 @@
 package com.jonadaly.brood.ui.main
 
 import android.app.Application
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.view.View
+import android.util.Log
 import com.jonadaly.brood.App
 import com.jonadaly.brood.R
 import com.jonadaly.brood.api.BroodApi
@@ -18,11 +17,11 @@ import javax.inject.Inject
 
 class MainActivityViewModel(app: Application) : BaseViewModel(app) {
 
+    private val TAG: String = this.javaClass.simpleName
+
     private val disposables = CompositeDisposable()
 
-    val broodLiveData: MutableLiveData<Brood> = MutableLiveData()
-
-    private var brood: LiveData<Brood>? = null
+    val brood by lazy { MutableLiveData<Brood>() }
 
     @Inject
     lateinit var db: AppDatabase
@@ -36,25 +35,20 @@ class MainActivityViewModel(app: Application) : BaseViewModel(app) {
 
     fun getAppName() = getApplication<Application>().resources.getString(R.string.app_name)
 
-//    fun getBrood(): LiveData<Brood> {
-//        if (brood == null) {
-//            brood = MutableLiveData<Brood>()
-//            loadBrood()
-//        }
-//        return brood!!
-//    }
-//
-//    fun loadBrood(): Brood {
-//        disposables.add(api.getBroodById("1234")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe { loadingVisibility.value = View.VISIBLE }
-//                .subscribe(
-//                        { onRetrievePostListSuccess() },
-//                        { onRetrievePostListError() }
-//                )
-//        )
-//    }
+    fun loadBrood() {
+        disposables.add(api.getBroodById("ee181707-da61-4d9d-85b9-a17f0fbc1533")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { Log.i(TAG, "Subscribed") }
+                .subscribe(
+                        {
+                            Log.i(TAG, "Succeeded")
+                            brood.value = it
+                        },
+                        { Log.i(TAG, "Error") }
+                )
+        )
+    }
 
     override fun onCleared() {
         super.onCleared()
