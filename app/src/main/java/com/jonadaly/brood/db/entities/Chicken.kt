@@ -13,12 +13,12 @@ import android.arch.persistence.room.*
 ])
 data class Chicken(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    var broodUuid: String?,
-    var name: String?,
-    var created: String?,
-    var openweatherIconId: String?,
-    var status: String?,
-    var temperature: Float?,
-    var uuid: String?,
-    @ColumnInfo(name = "brood_id") var broodId: Long
+    var broodUuid: String = "",
+    var name: String = "",
+    var created: String = "",
+    var openweatherIconId: String = "",
+    var status: String = "",
+    var temperature: Float = 0f,
+    var uuid: String = "",
+    @ColumnInfo(name = "brood_id") var broodId: Long = -1
 )
